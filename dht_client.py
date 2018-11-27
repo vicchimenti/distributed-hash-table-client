@@ -15,7 +15,7 @@ import socket
 import sys
 
 
-
+# TODO: add udp full functionality for sendto recvfrom and test with on cs1
 
 UDP_IP = "127.0.0.1"
 UDP_PORT = 10109
