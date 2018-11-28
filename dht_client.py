@@ -4,9 +4,11 @@
 #   dht_client.py
 #   created         11/26/2018
 #   last modified   11/28/2018
-
-
 #   Distributed Hash Table Client
+#   /usr/local/python3/bin/python3
+
+
+
 
 
 
@@ -15,13 +17,63 @@ import socket
 import sys
 
 
+#   *****       *****   function definitions    *****       *****   #
+
+
+# get user input from command line
+def getInput (param) :
+    try :
+        user_input = sys.argv[param]
+    except IndexError :
+        sys.stderr.write ("ERROR No Valid Command Line Input : ")
+        sys.exit ("Exiting Program")
+    except KeyError :
+        sys.stderr.write ("ERROR Invalid Charcter Entered : ")
+        sys.exit ("Exiting Program")
+    except Exception :
+        sys.stderr.write ("ERROR Invalid Command Line Entry : ")
+        sys.exit ("Exiting Program")
+    return user_input
+
+
+# validate URL entered and assign host IP number
+def getIP(node)
+    try :
+        node_ip = socket.gethostbyname(node)
+    except socket.gaierror :
+        sys.stderr.write ("ERROR Invalid URL Entered : ")
+        sys.exit ("Exiting Program")
+
+    # convert host IP number to str for troubleshooting/testing
+    node_ip_str = str(node_ip)
+    if node_ip_str == MATCH_ALL :
+            sys.stderr.write ("ERROR Invalid IP Number : ")
+            sys.exit ("Exiting Program")
+    else :
+        return node_ip_str
+
 # TODO: add udp full functionality for sendto recvfrom and test with on cs1
 
-UDP_IP = "127.0.0.1"
-UDP_PORT = 10109
-MESSAGE = "Hello World"
+# DEFINE CONTSANTS
+PARAM_MIN = 3
+PARAM_MAX = 4
+MATCH_ALL = "0.0.0.0"                   # for IP validity checking
+
+# set defaults
+ip_addr = "127.0.0.1"
+port = 10109
+node = "cs1.seattleu.edu"
+operation = "get"
+key = "key"
+value = "value"
+message = "Hello World"
+
+
+
+
+ip_addr = getIP(node)
 sock = socket.socket(socket.AF_INET, socket.SOCK_DRGAM)
-sock.sento(MESSAGE, (UDP_IP, UDP_PORT))
+sock.sento(message, (ip_addr, port))
 
 
 #   eof
