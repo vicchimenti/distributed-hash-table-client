@@ -15,6 +15,7 @@
 
 import socket
 import sys
+from inspect import signature
 
 
 #   *****       *****   function definitions    *****       *****   #
@@ -52,6 +53,11 @@ def getIP(node)
     else :
         return node_ip_str
 
+
+# command line signature
+def cmdLineSignature(self, arg1, kwarg1=None) :
+    pass
+
 # TODO: add udp full functionality for sendto recvfrom and test with on cs1
 
 # DEFINE CONTSANTS
@@ -69,8 +75,17 @@ value = "value"
 message = "Hello World"
 
 
+# get the command line input
+sig = signature(cmdLineSignature)
+params = sig.parameters
+total_paramaters = len(params)
+
+#***** TODO parse the command line parameters and assign to variables
 
 
+
+
+# connect to a node
 ip_addr = getIP(node)
 sock = socket.socket(socket.AF_INET, socket.SOCK_DRGAM)
 sock.sento(message, (ip_addr, port))
