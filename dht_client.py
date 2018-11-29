@@ -3,23 +3,21 @@
 #   p2 Distributed Hash Table
 #   dht_client.py
 #   created         11/26/2018
-#   last modified   11/28/2018
+#   last modified   11/29/2018
 #   Distributed Hash Table Client
 #   /usr/local/python3/bin/python3
 
 
 
 
+import sys              # for system calls
+import socket           # for udp socket functionality
+import argparse         # for parsing command line arguments
 
 
 
-import socket
-import sys
-import argparse
-#from inspect import signature
 
-
-#   *****       *****   function definitions    *****       *****   #
+#   ***************     function definitions     ***************   #
 
 
 # get user input from command line
@@ -56,12 +54,10 @@ def getIP(node)
     return node_ip_str
 
 
+#   ***************     end function definitions     ***************   #
 
 
 
-
-
-# TODO: add udp full functionality for sendto recvfrom and test with on cs1
 
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"                   # for IP validity checking
@@ -76,10 +72,14 @@ parser.add_argument('value', type=str, nargs='*', default='')
 args = parser.parse_args()
 
 
-# connect to a node
+
+
+# validate ip address
 ip_addr = getIP(args.node)
+
+# connect to a node
 sock = socket.socket(socket.AF_INET, socket.SOCK_DRGAM)
-sock.sendto(message, (args.node, args.nodePort))
+sock.sendto(key, value, (ip_addr, args.nodePort))
 
 
 #   eof
