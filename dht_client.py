@@ -20,38 +20,38 @@ import argparse         # for parsing command line arguments
 #   ***************     function definitions     ***************   #
 
 
-# get user input from command line
-def getInput (param) :
-    try :
-        user_input = sys.argv[param]
-    except IndexError :
-        sys.stderr.write ("ERROR No Valid Command Line Input : ")
-        sys.exit ("Exiting Program")
-    except KeyError :
-        sys.stderr.write ("ERROR Invalid Charcter Entered : ")
-        sys.exit ("Exiting Program")
-    except Exception :
-        sys.stderr.write ("ERROR Invalid Command Line Entry : ")
-        sys.exit ("Exiting Program")
-    return user_input
+# # get user input from command line
+# def getInput (param) :
+#     try :
+#         user_input = sys.argv[param]
+#     except IndexError :
+#         sys.stderr.write ("ERROR No Valid Command Line Input : ")
+#         sys.exit ("Exiting Program")
+#     except KeyError :
+#         sys.stderr.write ("ERROR Invalid Charcter Entered : ")
+#         sys.exit ("Exiting Program")
+#     except Exception :
+#         sys.stderr.write ("ERROR Invalid Command Line Entry : ")
+#         sys.exit ("Exiting Program")
+#     return user_input
 
 
-# validate URL entered and assign host IP number
-def getIP(nd) :
-    try :
-        nd_ip = socket.gethostbyname(nd)
-    except socket.gaierror :
-        sys.stderr.write ("ERROR Invalid URL Entered : ")
-        sys.exit ("Exiting Program")
-
-    # convert host IP number to str for troubleshooting/testing
-    node_ip_str = str(nd_ip)
-    print ("node_ip_str : " + node_ip_str)
-    if node_ip_str == MATCH_ALL :
-            sys.stderr.write ("ERROR Invalid IP Number : ")
-            sys.exit ("Exiting Program")
-
-    return node_ip_str
+# # validate URL entered and assign host IP number
+# def getIP(nd) :
+#     try :
+#         nd_ip = socket.gethostbyname(nd)
+#     except socket.gaierror :
+#         sys.stderr.write ("ERROR Invalid URL Entered : ")
+#         sys.exit ("Exiting Program")
+#
+#     # convert host IP number to str for troubleshooting/testing
+#     node_ip_str = str(nd_ip)
+#     print ("node_ip_str : " + node_ip_str)
+#     if node_ip_str == MATCH_ALL :
+#             sys.stderr.write ("ERROR Invalid IP Number : ")
+#             sys.exit ("Exiting Program")
+#
+#     return node_ip_str
 
 
 #   ***************     end function definitions     ***************   #
@@ -62,6 +62,9 @@ def getIP(nd) :
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"                   # for IP validity checking
 
+# define defaults
+charset = "UTF-8"                       # default encoding protocol
+
 # parse and assign command-line input
 parser = argparse.ArgumentParser()
 parser.add_argument('node', type=str, nargs=1, default='cs1.seattleu.edu')
@@ -71,17 +74,24 @@ parser.add_argument('key', type=str, nargs=1)
 parser.add_argument('value', type=str, nargs='*', default='')
 args = parser.parse_args()
 
+# combine key value pair
+key_str = str(args.key)
+#val_str =  str(args.value)
+pair = key_str
+#pair.join(val_str)
+message = b'test'
 
 
-
-# validate ip address
-#ip_addr = getIP(str(args.node))
+# define host port number and node
+server_address = (args.node, args.nodePort)
+#portno = args.nodePort
+#node_addr = args.node
 
 # connect to a node
-clientSock = socket.socket(socket.AF_INET, socket.SOCK_DRGAM)
+clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # send key value pair
-bytes_sent = clientSock.sendto(key, value, (str(args.node), int(args.nodePort)))
+bytes_sent = clientSock.sendto(message, server_address)
 print ('sent {} bytes to {}'.format(bytes_sent, str(args.node)))
 
 # receive response
