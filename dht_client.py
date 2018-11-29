@@ -74,16 +74,18 @@ parser.add_argument('key', type=str, nargs=1)
 parser.add_argument('value', type=str, nargs='*', default='')
 args = parser.parse_args()
 
-# combine key value pair
-key_str = str(args.key)
-#val_str =  str(args.value)
-pair = key_str
-#pair.join(val_str)
+print ('node : ' + str(args.node))
+print ('nodePort : ' + str(args.nodePort))
+print ('operation : ' + str(args.operation))
+print ('key : ' + str(args.key))
+print ('value : ' + str(args.value))
+
+
 message = b'test'
 
 
 # define host port number and node
-server_address = (args.node, args.nodePort)
+server_address = (str(args.node[0]), int(args.nodePort[0]))
 #portno = args.nodePort
 #node_addr = args.node
 
@@ -92,10 +94,10 @@ clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # send key value pair
 bytes_sent = clientSock.sendto(message, server_address)
-print ('sent {} bytes to {}'.format(bytes_sent, str(args.node)))
+print ('sent {} bytes to {}'.format(bytes_sent, str(args.node[0])))
 
 # receive response
-response, response_node = sock.recvfrom(4096)
+response, response_node = clientSock.recvfrom(4096)
 print ('received {} bytes from {}'.format(len(response), response_node))
 
 clientSock.close()
