@@ -79,15 +79,16 @@ print ('nodePort : ' + str(args.nodePort))
 print ('operation : ' + str(args.operation))
 print ('key : ' + str(args.key))
 print ('value : ' + str(args.value))
-
-
 message = b'test'
+
+# TODO :
+#   combine key value pair into single string
+#   add ts print for message received in str format
+#   clean and prep for encryption
 
 
 # define host port number and node
 server_address = (str(args.node[0]), int(args.nodePort[0]))
-#portno = args.nodePort
-#node_addr = args.node
 
 # connect to a node
 clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
