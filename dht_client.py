@@ -15,7 +15,8 @@
 
 import socket
 import sys
-from inspect import signature
+import argparse
+#from inspect import signature
 
 
 #   *****       *****   function definitions    *****       *****   #
@@ -47,16 +48,17 @@ def getIP(node)
 
     # convert host IP number to str for troubleshooting/testing
     node_ip_str = str(node_ip)
+    print ("node_ip_str : " + node_ip_str)
     if node_ip_str == MATCH_ALL :
             sys.stderr.write ("ERROR Invalid IP Number : ")
             sys.exit ("Exiting Program")
-    else :
-        return node_ip_str
+
+    return node_ip_str
 
 
 # command line signature
-def cmdLineSignature(self, arg1, kwarg1=None) :
-    pass
+# def cmdLineSignature(self, arg1, kwarg1=None) :
+#     pass
 
 # TODO: add udp full functionality for sendto recvfrom and test with on cs1
 
@@ -66,29 +68,34 @@ PARAM_MAX = 4
 MATCH_ALL = "0.0.0.0"                   # for IP validity checking
 
 # set defaults
-ip_addr = "127.0.0.1"
-port = 10109
-node = "cs1.seattleu.edu"
-operation = "get"
-key = "key"
-value = "value"
+#port = 10109
+#node = "cs1.seattleu.edu"
+#operation = "get"
+#key = "key"
+#value = "value"
 message = "Hello World"
 
 
 # get the command line input
-sig = signature(cmdLineSignature)
-params = sig.parameters
-total_paramaters = len(params)
+# sig = signature(cmdLineSignature)
+# params = sig.parameters
+# total_paramaters = len(params)
 
 #***** TODO parse the command line parameters and assign to variables
 
+parser = argparse.ArgumentParser()
+parser.add_argument('node', type=str, nargs=1, default='cs1.seattleu.edu')
+parser.add_argument('nodePort', type=int, nargs=1, default=10109)
+parser.add_argument('operation', type=str, nargs=1, required=True)
+parser.add_argument('key', type=str, nargs=1, required=True)
+parser.add_argument('value', type=str, nargs='*', default='')
 
 
 
 # connect to a node
 ip_addr = getIP(node)
 sock = socket.socket(socket.AF_INET, socket.SOCK_DRGAM)
-sock.sento(message, (ip_addr, port))
+sock.sento(message, (node, port))
 
 
 #   eof
