@@ -37,15 +37,15 @@ def getInput (param) :
 
 
 # validate URL entered and assign host IP number
-def getIP(node)
+def getIP(nd) :
     try :
-        node_ip = socket.gethostbyname(node)
+        nd_ip = socket.gethostbyname(nd)
     except socket.gaierror :
         sys.stderr.write ("ERROR Invalid URL Entered : ")
         sys.exit ("Exiting Program")
 
     # convert host IP number to str for troubleshooting/testing
-    node_ip_str = str(node_ip)
+    node_ip_str = str(nd_ip)
     print ("node_ip_str : " + node_ip_str)
     if node_ip_str == MATCH_ALL :
             sys.stderr.write ("ERROR Invalid IP Number : ")
@@ -66,8 +66,8 @@ MATCH_ALL = "0.0.0.0"                   # for IP validity checking
 parser = argparse.ArgumentParser()
 parser.add_argument('node', type=str, nargs=1, default='cs1.seattleu.edu')
 parser.add_argument('nodePort', type=int, nargs=1, default=10109)
-parser.add_argument('operation', type=str, nargs=1, required=True)
-parser.add_argument('key', type=str, nargs=1, required=True)
+parser.add_argument('operation', type=str, nargs=1)
+parser.add_argument('key', type=str, nargs=1)
 parser.add_argument('value', type=str, nargs='*', default='')
 args = parser.parse_args()
 
@@ -75,14 +75,14 @@ args = parser.parse_args()
 
 
 # validate ip address
-ip_addr = getIP(args.node)
+#ip_addr = getIP(str(args.node))
 
 # connect to a node
 sock = socket.socket(socket.AF_INET, socket.SOCK_DRGAM)
 
 # send key value pair
-bytes_sent = sock.sendto(key, value, (ip_addr, args.nodePort))
-print ('sent {} bytes to {}'.format(bytes_sent, args.node))
+bytes_sent = sock.sendto(key, value, (str(args.node), int(args.nodePort)))
+print ('sent {} bytes to {}'.format(bytes_sent, str(args.node)))
 
 # receive response
 response, response_node = sock.recvfrom(4096)
