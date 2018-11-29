@@ -56,46 +56,30 @@ def getIP(node)
     return node_ip_str
 
 
-# command line signature
-# def cmdLineSignature(self, arg1, kwarg1=None) :
-#     pass
+
+
+
+
 
 # TODO: add udp full functionality for sendto recvfrom and test with on cs1
 
 # DEFINE CONTSANTS
-PARAM_MIN = 3
-PARAM_MAX = 4
 MATCH_ALL = "0.0.0.0"                   # for IP validity checking
 
-# set defaults
-#port = 10109
-#node = "cs1.seattleu.edu"
-#operation = "get"
-#key = "key"
-#value = "value"
-message = "Hello World"
-
-
-# get the command line input
-# sig = signature(cmdLineSignature)
-# params = sig.parameters
-# total_paramaters = len(params)
-
-#***** TODO parse the command line parameters and assign to variables
-
+# parse and assign command-line input
 parser = argparse.ArgumentParser()
 parser.add_argument('node', type=str, nargs=1, default='cs1.seattleu.edu')
 parser.add_argument('nodePort', type=int, nargs=1, default=10109)
 parser.add_argument('operation', type=str, nargs=1, required=True)
 parser.add_argument('key', type=str, nargs=1, required=True)
 parser.add_argument('value', type=str, nargs='*', default='')
-
+args = parser.parse_args()
 
 
 # connect to a node
-ip_addr = getIP(node)
+ip_addr = getIP(args.node)
 sock = socket.socket(socket.AF_INET, socket.SOCK_DRGAM)
-sock.sento(message, (node, port))
+sock.sendto(message, (args.node, args.nodePort))
 
 
 #   eof
