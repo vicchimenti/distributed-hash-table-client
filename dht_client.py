@@ -79,7 +79,15 @@ ip_addr = getIP(args.node)
 
 # connect to a node
 sock = socket.socket(socket.AF_INET, socket.SOCK_DRGAM)
-sock.sendto(key, value, (ip_addr, args.nodePort))
 
+# send key value pair
+bytes_sent = sock.sendto(key, value, (ip_addr, args.nodePort))
+print ('sent {} bytes to {}'.format(bytes_sent, args.node))
 
+# receive response
+response, response_node = sock.recvfrom(4096)
+print ('received {} bytes from {}'.format(len(response), response_node))
+
+sock.close()
+print ('Socket Closed')
 #   eof
