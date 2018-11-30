@@ -93,10 +93,11 @@ def ipToLong (ip) :
 
 
 # DEFINE CONTSANTS
-MATCH_ALL = "0.0.0.0"                   # for IP validity checking
+MATCH_ALL = "0.0.0.0"       # for IP validity checking
+MY_PORT = 10100             # pre-defined client port number
 
 # define defaults
-charset = "UTF-8"                       # default encoding protocol
+charset = "UTF-8"           # default encoding protocol
 
 # parse and assign command-line input
 parser = argparse.ArgumentParser()
@@ -132,7 +133,7 @@ server_address = (str(args.node[0]), int(args.nodePort[0]))
 
 # connect to a node
 clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-clientSock.bind(my_IP)
+clientSock.bind((my_IP_str, MY_PORT))
 ip_address, my_port = clientSock.getsockname()
 print ('my_port : ' + str(my_port))
 
