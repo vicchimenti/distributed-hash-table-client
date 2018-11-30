@@ -135,7 +135,7 @@ ip_address, my_port = clientSock.getsockname()
 # define host port number and node
 server_address = (str(args.node[0]), int(args.nodePort[0]))
 
-# compile server request
+# compile key value pair for server request
 request = my_IP, MY_PORT, args.operation[0], args.key[0], args.value[0]
 message = pickle.dumps(request)
 print ('message : ' + str(message))
@@ -145,9 +145,10 @@ bytes_sent = clientSock.sendto(message, server_address)
 print ('sent {} bytes to {}'.format(bytes_sent, str(args.node[0])))
 
 # receive response
-response, response_node = clientSock.recvfrom(4096)
+message, response_node = clientSock.recvfrom(4096)
+response = pickle.loads(message)
 print ('received {} bytes from {}'.format(len(response), response_node))
-print ('response : ' + response.decode(charset))
+print ('response : ' + str(response))
 
 clientSock.close()
 print ('Socket Closed')
