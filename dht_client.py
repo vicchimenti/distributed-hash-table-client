@@ -116,13 +116,17 @@ message ='test'
 my_addr = getHost()
 my_IP = getIP(my_addr)
 print ('my_IP : ' + str(my_IP))
-sys.exit()
+
 
 # define host port number and node
 server_address = (str(args.node[0]), int(args.nodePort[0]))
 
 # connect to a node
 clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+my_port = clientSock.getsockname()[1]
+print ('my_port : ' + str(my_port))
+sys.exit()
+
 
 # send key value pair
 bytes_sent = clientSock.sendto(message.encode(charset), server_address)
