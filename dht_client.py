@@ -100,7 +100,7 @@ print ('sent {} bytes to {}'.format(bytes_sent, str(args.node[0])))
 # receive response
 response, response_node = clientSock.recvfrom(4096)
 print ('received {} bytes from {}'.format(len(response), response_node))
-print ('response : ' + str(response).decode)
+print ('response : ' + str(response).decode(charset))
 
 clientSock.close()
 print ('Socket Closed')
