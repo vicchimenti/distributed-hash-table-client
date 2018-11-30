@@ -48,45 +48,6 @@ def getIP(h) :
     return h_ip
 
 
-# convert ip address string to long
-def ipToLong (ip) :
-    return struct.unpack('>L', socket.inet_aton(ip))[0]
-
-
-# # get user input from command line
-# def getInput (param) :
-#     try :
-#         user_input = sys.argv[param]
-#     except IndexError :
-#         sys.stderr.write ("ERROR No Valid Command Line Input : ")
-#         sys.exit ("Exiting Program")
-#     except KeyError :
-#         sys.stderr.write ("ERROR Invalid Charcter Entered : ")
-#         sys.exit ("Exiting Program")
-#     except Exception :
-#         sys.stderr.write ("ERROR Invalid Command Line Entry : ")
-#         sys.exit ("Exiting Program")
-#     return user_input
-
-
-# # validate URL entered and assign host IP number
-# def getIP(nd) :
-#     try :
-#         nd_ip = socket.gethostbyname(nd)
-#     except socket.gaierror :
-#         sys.stderr.write ("ERROR Invalid URL Entered : ")
-#         sys.exit ("Exiting Program")
-#
-#     # convert host IP number to str for troubleshooting/testing
-#     node_ip_str = str(nd_ip)
-#     print ("node_ip_str : " + node_ip_str)
-#     if node_ip_str == MATCH_ALL :
-#             sys.stderr.write ("ERROR Invalid IP Number : ")
-#             sys.exit ("Exiting Program")
-#
-#     return node_ip_str
-
-
 #   ***************     end function definitions     ***************   #
 
 
@@ -127,28 +88,40 @@ my_URL = getHost()
 my_IP = getIP(my_URL)
 my_address = (my_IP, MY_PORT)
 
+
 # connect to a node
 clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 clientSock.bind(my_address)
 ip_address, my_port = clientSock.getsockname()
 
+
 # define host port number and node
 server_address = (str(args.node[0]), int(args.nodePort[0]))
+
 
 # compile key value pair for server request
 request = my_IP, MY_PORT, args.operation[0], args.key[0], args.value[0]
 message = pickle.dumps(request)
 print ('request : ' + str(request))
 
+
+
+
 # send key value pair
 bytes_sent = clientSock.sendto(message, server_address)
 print ('sent {} bytes to {}'.format(bytes_sent, str(args.node[0])))
+
+
+
 
 # receive response
 message, response_node = clientSock.recvfrom(4096)
 response = pickle.loads(message)
 print ('received {} bytes from {}'.format(len(message), response_node))
 print ('response : ' + str(response))
+
+
+
 
 clientSock.close()
 print ('Socket Closed')
