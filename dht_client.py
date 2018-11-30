@@ -121,19 +121,18 @@ message ='test'
 #   add ts print for message received in str format
 #   clean and prep for encryption
 
-my_addr = getHost()
-my_IP_str = getIP(my_addr)
-print ('my_IP_str : ' + my_IP_str)
-ip_long = ipToLong(my_IP_str)
-my_IP = ipaddress.IPv4Address(ip_long)
-print ('my_IP : ' + str(my_IP))
+
+# get local host info
+my_URL = getHost()
+my_IP = getIP(my_URL)
+my_address = (my_IP, MY_PORT)
 
 # define host port number and node
 server_address = (str(args.node[0]), int(args.nodePort[0]))
 
 # connect to a node
 clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-clientSock.bind((my_IP_str, MY_PORT))
+clientSock.bind(my_address)
 ip_address, my_port = clientSock.getsockname()
 print ('my_port : ' + str(my_port))
 
