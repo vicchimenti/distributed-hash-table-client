@@ -138,7 +138,7 @@ server_address = (str(args.node[0]), int(args.nodePort[0]))
 # compile key value pair for server request
 request = my_IP, MY_PORT, args.operation[0], args.key[0], args.value[0]
 message = pickle.dumps(request)
-print ('message : ' + str(message))
+print ('request : ' + str(request))
 
 # send key value pair
 bytes_sent = clientSock.sendto(message, server_address)
@@ -147,7 +147,7 @@ print ('sent {} bytes to {}'.format(bytes_sent, str(args.node[0])))
 # receive response
 message, response_node = clientSock.recvfrom(4096)
 response = pickle.loads(message)
-print ('received {} bytes from {}'.format(len(response), response_node))
+print ('received {} bytes from {}'.format(len(message), response_node))
 print ('response : ' + str(response))
 
 clientSock.close()
