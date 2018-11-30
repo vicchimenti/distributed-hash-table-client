@@ -58,6 +58,7 @@ MY_PORT = 10101             # pre-defined client port number
 
 # define defaults
 charset = "UTF-8"           # default encoding protocol
+hops = 0                    # increments with each node hop
 
 # parse and assign command-line input
 parser = argparse.ArgumentParser()
@@ -99,7 +100,7 @@ server_address = (str(args.node[0]), int(args.nodePort[0]))
 
 
 # compile key value pair for server request
-request = my_IP, MY_PORT, args.operation[0], args.key[0], args.value[0]
+request = my_IP, MY_PORT, hops, args.operation[0], args.key[0], args.value[0]
 message = pickle.dumps(request)
 print ('request : ' + str(request))
 
