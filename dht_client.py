@@ -79,7 +79,7 @@ print ('nodePort : ' + str(args.nodePort))
 print ('operation : ' + str(args.operation))
 print ('key : ' + str(args.key))
 print ('value : ' + str(args.value))
-message = b'test'
+message ='test'
 
 # TODO :
 #   combine key value pair into single string
@@ -94,7 +94,7 @@ server_address = (str(args.node[0]), int(args.nodePort[0]))
 clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # send key value pair
-bytes_sent = clientSock.sendto(message, server_address)
+bytes_sent = clientSock.sendto(message.encode(charset), server_address)
 print ('sent {} bytes to {}'.format(bytes_sent, str(args.node[0])))
 
 # receive response
