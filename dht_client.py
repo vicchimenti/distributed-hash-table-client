@@ -14,9 +14,8 @@
 import sys              # for system calls
 import socket           # for udp socket functionality
 import pickle           # for sending a list over socket
-import struct           # for ip adress manipulation
 import argparse         # for parsing command line arguments
-import ipaddress        # create ipv4 tuple
+
 
 
 
