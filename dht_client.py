@@ -24,6 +24,7 @@ import argparse         # for parsing command line arguments
 
 # get the hostname
 def getHost() :
+    try :
         h = socket.gethostname()
     except AttributeError :
         error_message = "ERROR Failed to Get Hostname"
@@ -114,6 +115,8 @@ message ='test'
 
 my_addr = getHost()
 my_IP = getIP(my_addr)
+print ('my_IP : ' + str(my_IP))
+sys.exit()
 
 # define host port number and node
 server_address = (str(args.node[0]), int(args.nodePort[0]))
