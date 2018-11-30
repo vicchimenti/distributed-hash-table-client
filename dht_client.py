@@ -14,7 +14,9 @@
 import sys              # for system calls
 import socket           # for udp socket functionality
 import pickle           # for sending a list over socket
+import struct           # for ip adress manipulation
 import argparse         # for parsing command line arguments
+import ipaddress        # create ipv4 tuple
 
 
 
@@ -44,6 +46,11 @@ def getIP(h) :
         sys.exit ("Exiting Program")
 
     return h_ip
+
+
+# convert ip address string to long
+def ipToLong (ip) :
+    return struct.unpack('>L', socket.inet_aton(ip))[0]
 
 
 # # get user input from command line
@@ -114,9 +121,11 @@ message ='test'
 #   clean and prep for encryption
 
 my_addr = getHost()
-my_IP = getIP(my_addr)
+my_IP_str = getIP(my_addr)
+print ('my_IP_str : ' + my_IP_str)
+ip_long = ipToLong(my_IP_str)
+my_IP = ipaddress.IPv4Address(ip_long)
 print ('my_IP : ' + str(my_IP))
-
 
 # define host port number and node
 server_address = (str(args.node[0]), int(args.nodePort[0]))
