@@ -10,14 +10,39 @@
 
 
 
-import socket           # for udp socket functionality
+
 import sys              # for system calls
+import socket           # for udp socket functionality
+import pickle           # for sending a list over socket
 import argparse         # for parsing command line arguments
 
 
 
 
 #   ***************     function definitions     ***************   #
+
+
+# get the hostname
+def getHost() :
+        h = socket.gethostname()
+    except AttributeError :
+        error_message = "ERROR Failed to Get Hostname"
+        print (error_message)
+        sys.exit ("Exiting Program")
+
+    return h
+
+
+# get the host IP number
+def getIP(h) :
+    try :
+        h_ip = socket.gethostbyname(h)
+    except AttributeError :
+        error_message = "ERROR Failed to Get Host IP Number"
+        print (error_message)
+        sys.exit ("Exiting Program")
+
+    return h_ip
 
 
 # # get user input from command line
@@ -81,11 +106,14 @@ print ('key : ' + str(args.key))
 print ('value : ' + str(args.value))
 message ='test'
 
+
 # TODO :
 #   combine key value pair into single string
 #   add ts print for message received in str format
 #   clean and prep for encryption
 
+my_addr = getHost()
+my_IP = getIP(my_addr)
 
 # define host port number and node
 server_address = (str(args.node[0]), int(args.nodePort[0]))
