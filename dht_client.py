@@ -123,9 +123,10 @@ server_address = (str(args.node[0]), int(args.nodePort[0]))
 
 # connect to a node
 clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-my_port = clientSock.getsockname()[1]
+clientSock.bind(my_IP)
+ip_address, my_port = clientSock.getsockname()
 print ('my_port : ' + str(my_port))
-sys.exit()
+
 
 
 # send key value pair
