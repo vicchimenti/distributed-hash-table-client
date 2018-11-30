@@ -94,7 +94,7 @@ def ipToLong (ip) :
 
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
-MY_PORT = 10100             # pre-defined client port number
+MY_PORT = 10101             # pre-defined client port number
 
 # define defaults
 charset = "UTF-8"           # default encoding protocol
@@ -113,7 +113,7 @@ print ('nodePort : ' + str(args.nodePort))
 print ('operation : ' + str(args.operation))
 print ('key : ' + str(args.key))
 print ('value : ' + str(args.value))
-message ='test'
+
 
 
 # TODO :
@@ -127,19 +127,21 @@ my_URL = getHost()
 my_IP = getIP(my_URL)
 my_address = (my_IP, MY_PORT)
 
-# define host port number and node
-server_address = (str(args.node[0]), int(args.nodePort[0]))
-
 # connect to a node
 clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 clientSock.bind(my_address)
 ip_address, my_port = clientSock.getsockname()
-print ('my_port : ' + str(my_port))
 
+# define host port number and node
+server_address = (str(args.node[0]), int(args.nodePort[0]))
 
+# compile server request
+request = my_IP, MY_PORT, args.operation[0], args.key[0], args.value[0]
+message = pickle.dumps(request)
+print ('message : ' + str(message))
 
 # send key value pair
-bytes_sent = clientSock.sendto(message.encode(charset), server_address)
+bytes_sent = clientSock.sendto(message, server_address)
 print ('sent {} bytes to {}'.format(bytes_sent, str(args.node[0])))
 
 # receive response
