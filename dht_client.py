@@ -3,7 +3,7 @@
 #   p2 Distributed Hash Table
 #   dht_client.py
 #   created         11/26/2018
-#   last modified   11/30/2018
+#   last modified   12/1/2018
 #   Distributed Hash Table Client
 #   /usr/local/python3/bin/python3
 
@@ -15,7 +15,7 @@ import sys                  # for system calls
 import socket               # for udp socket functionality
 import pickle               # for sending a list over socket
 import argparse             # for parsing command line arguments
-import hashlib              # SHA-1 hash functionality
+#import hashlib              # SHA-1 hash functionality
 
 
 
