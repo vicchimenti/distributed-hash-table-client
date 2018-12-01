@@ -115,7 +115,7 @@ message = pickle.dumps(request)
 # send key value pair
 bytes_sent = clientSock.sendto(message, server_address)
 print ('sent {} bytes to {}'.format(bytes_sent, str(server_address)))
-print ('\n request sent: ' : + str(request))
+print ('\n request sent : ' + str(request))
 
 
 
