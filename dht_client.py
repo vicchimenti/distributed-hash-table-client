@@ -10,13 +10,11 @@
 
 
 
-
 import sys                  # for system calls
 import socket               # for udp socket functionality
 import pickle               # for sending a list over socket
 import argparse             # for parsing command line arguments
 #import hashlib              # SHA-1 hash functionality
-
 
 
 
@@ -55,11 +53,14 @@ def getIP(h) :
 
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
-MY_PORT = 10109             # pre-defined client port number
+MY_PORT = 10119             # pre-defined client port number
 
 # define defaults
 charset = "UTF-8"           # default encoding protocol
 hops = 0                    # increments with each node hop
+
+
+
 
 # parse and assign command-line input
 parser = argparse.ArgumentParser()
@@ -70,6 +71,10 @@ parser.add_argument('key', type=str, nargs=1)
 parser.add_argument('value', type=str, nargs='*', default='')
 args = parser.parse_args()
 
+
+
+
+# display user input
 print ('node : ' + str(args.node))
 print ('nodePort : ' + str(args.nodePort))
 print ('operation : ' + str(args.operation))
@@ -78,16 +83,13 @@ print ('value : ' + str(args.value))
 
 
 
-# TODO :
-#   combine key value pair into single string
-#   add ts print for message received in str format
-#   clean and prep for encryption
-
 
 # get local host info
 my_URL = getHost()
 my_IP = getIP(my_URL)
 my_address = (my_IP, MY_PORT)
+
+
 
 
 # connect to a node
@@ -96,8 +98,12 @@ clientSock.bind(my_address)
 ip_address, my_port = clientSock.getsockname()
 
 
+
+
 # define host port number and node
 server_address = (str(args.node[0]), int(args.nodePort[0]))
+
+
 
 
 # compile key value pair for server request
