@@ -114,8 +114,8 @@ message = pickle.dumps(request)
 
 # send key value pair
 bytes_sent = clientSock.sendto(message, server_address)
-print ('sent {} bytes to {}'.format(bytes_sent, str(server_address)))
-print ('\n request sent : ' + str(request))
+print ('\nsent {} bytes to {}'.format(bytes_sent, str(server_address)))
+print ('request sent : ' + str(request))
 
 
 
@@ -123,8 +123,8 @@ print ('\n request sent : ' + str(request))
 # receive response
 message, response_node = clientSock.recvfrom(4096)
 response = pickle.loads(message)
-print ('received {} bytes from {}'.format(len(message), response_node))
-print ('\n response received : ' + str(response))
+print ('\nreceived {} bytes from {}'.format(len(message), response_node))
+print ('response received : ' + str(response))
 
 
 
