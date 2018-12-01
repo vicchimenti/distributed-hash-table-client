@@ -74,7 +74,7 @@ args = parser.parse_args()
 
 
 # display user input
-print ('node : ' + str(args.node))
+print ('\nnode : ' + str(args.node))
 print ('nodePort : ' + str(args.nodePort))
 print ('operation : ' + str(args.operation))
 print ('key : ' + str(args.key))
@@ -130,5 +130,5 @@ print ('response received : ' + str(response))
 
 
 clientSock.close()
-print ('Socket Closed')
+print ('\nSocket Closed')
 #   eof
