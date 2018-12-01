@@ -118,7 +118,7 @@ print ('\nsent {} bytes to {}'.format(bytes_sent, str(server_address)))
 print ('request sent : ' + str(request))
 
 
-
+# ******************* TODO: Format the Output Display ***********************  #
 
 # receive response
 message, response_node = clientSock.recvfrom(4096)
