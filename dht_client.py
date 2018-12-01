@@ -14,7 +14,6 @@ import sys                  # for system calls
 import socket               # for udp socket functionality
 import pickle               # for sending a list over socket
 import argparse             # for parsing command line arguments
-#import hashlib              # SHA-1 hash functionality
 
 
 
@@ -109,14 +108,14 @@ server_address = (str(args.node[0]), int(args.nodePort[0]))
 # compile key value pair for server request
 request = my_IP, MY_PORT, hops, args.operation[0], args.key[0], args.value[0]
 message = pickle.dumps(request)
-print ('request : ' + str(request))
 
 
 
 
 # send key value pair
 bytes_sent = clientSock.sendto(message, server_address)
-print ('sent {} bytes to {}'.format(bytes_sent, str(args.node[0])))
+print ('sent {} bytes to {}'.format(bytes_sent, str(server_address)))
+print ('\n request sent: ' : + str(request))
 
 
 
@@ -125,7 +124,7 @@ print ('sent {} bytes to {}'.format(bytes_sent, str(args.node[0])))
 message, response_node = clientSock.recvfrom(4096)
 response = pickle.loads(message)
 print ('received {} bytes from {}'.format(len(message), response_node))
-print ('response : ' + str(response))
+print ('\n response received : ' + str(response))
 
 
 
