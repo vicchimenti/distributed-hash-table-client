@@ -130,5 +130,5 @@ print ('response received : ' + str(response))
 
 
 clientSock.close()
-print ('\nSocket Closed')
+print ('\nSocket Closed\n')
 #   eof
