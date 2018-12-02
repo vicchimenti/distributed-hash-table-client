@@ -52,14 +52,14 @@ def getIP(h) :
 
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
-MY_PORT = 10119             # pre-defined client port number
+MY_PORT = 10116             # pre-defined client port number
 
 # define defaults
 charset = "UTF-8"           # default encoding protocol
 hops = 0                    # increments with each node hop
 
 
-
+# ************* ADD ERROR CHECKING FOR GET WITH A VALUE *********** #
 
 # parse and assign command-line input
 parser = argparse.ArgumentParser()
