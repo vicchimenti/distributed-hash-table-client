@@ -52,7 +52,7 @@ def getIP(h) :
 
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
-MY_PORT = 10115             # pre-defined client port number
+MY_PORT = 10113             # pre-defined client port number
 
 # define defaults
 charset = "UTF-8"           # default encoding protocol
@@ -67,7 +67,7 @@ parser.add_argument('node', type=str, nargs=1, default='cs1.seattleu.edu')
 parser.add_argument('nodePort', type=int, nargs=1, default=10109)
 parser.add_argument('operation', type=str, nargs=1)
 parser.add_argument('key', type=str, nargs=1)
-parser.add_argument('value', type=str, nargs='*', default='')
+parser.add_argument('value', type=str, nargs='?', default='\n')
 args = parser.parse_args()
 
 
