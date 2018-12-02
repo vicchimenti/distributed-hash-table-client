@@ -52,7 +52,7 @@ def getIP(h) :
 
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
-MY_PORT = 10118             # pre-defined client port number
+MY_PORT = 10117             # pre-defined client port number
 
 # define defaults
 charset = "UTF-8"           # default encoding protocol
@@ -103,7 +103,7 @@ ip_address, my_port = clientSock.getsockname()
 server_address = (str(args.node[0]), int(args.nodePort[0]))
 
 
-# ******************* TODO account for no value in value 
+# ******************* TODO account for no value in value
 
 # compile key value pair for server request
 request = my_IP, MY_PORT, hops, args.operation[0], args.key[0], args.value[0]
