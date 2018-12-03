@@ -45,15 +45,14 @@ def getIP(h) :
     return h_ip
 
 
+# if a value was entered with GET throw error and exit program
 def validateOperator(op, v) :
     if op == GET :
-        if v == NEWLINE : break
-        else :
+        if v != NEWLINE :
             error_message = \
                 "ERROR: GET request included value: all values invalid with GET"
             print (error_message)
             sys.exit ("Exiting Program")
-    else : break
 
 
 #   ***************     end function definitions     ***************   #
@@ -63,7 +62,7 @@ def validateOperator(op, v) :
 
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
-MY_PORT = 10113             # pre-defined client port number
+MY_PORT = 10111             # pre-defined client port number
 NEWLINE = '\n'              # newline constant
 GET = 'get'                 # get operator
 PUT = 'put'                 # put operator
@@ -73,7 +72,7 @@ charset = "UTF-8"           # default encoding protocol
 hops = 0                    # increments with each node hop
 
 
-# ************* ADD ERROR CHECKING FOR GET WITH A VALUE *********** #
+
 
 # parse and assign command-line input
 parser = argparse.ArgumentParser()
@@ -81,9 +80,14 @@ parser.add_argument('node', type=str, nargs=1, default='cs1.seattleu.edu')
 parser.add_argument('nodePort', type=int, nargs=1, default=10109)
 parser.add_argument('operation', type=str, nargs=1)
 parser.add_argument('key', type=str, nargs=1)
-parser.add_argument('value', type=str, nargs='?', default='\n')
+parser.add_argument('value', type=str, nargs='?', default=NEWLINE)
 args = parser.parse_args()
 
+
+
+
+# check for user input of value with get request
+validateOperator(args.operation[0], args.value[0])
 
 
 
@@ -94,11 +98,6 @@ print ('operation : ' + str(args.operation))
 print ('key : ' + str(args.key))
 print ('value : ' + str(args.value))
 
-
-
-
-# validate operation
-validateOperator(args.operation[0], agrs.value[0])
 
 
 
@@ -134,16 +133,16 @@ message = pickle.dumps(request)
 # send key value pair
 bytes_sent = clientSock.sendto(message, server_address)
 print ('\nsent {} bytes to {}'.format(bytes_sent, str(server_address)))
-print ('request sent : ' + str(request))
+print ('\nrequest sent : \n' + str(request))
 
 
-# ******************* TODO: Format the Output Display ***********************  #
+
 
 # receive response
 message, response_node = clientSock.recvfrom(4096)
 response = pickle.loads(message)
 print ('\nreceived {} bytes from {}'.format(len(message), response_node))
-print ('response received : ' + str(response))
+print ('\ntuple received : \n' + str(response))
 
 
 
@@ -161,4 +160,11 @@ print ('\nThe Value : \n' + str(value_response))
 
 clientSock.close()
 print ('\nSocket Closed\n')
+
+#   ******************** TODO :
+#   Add Error Checking *****************!!!!! #
+
+
+
+
 #   eof
