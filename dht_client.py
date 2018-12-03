@@ -122,7 +122,7 @@ ip_address, my_port = clientSock.getsockname()
 server_address = (str(args.node[0]), int(args.nodePort[0]))
 
 
-# ******************* TODO account for no value in value
+
 
 # compile key value pair for server request
 request = my_IP, MY_PORT, hops, args.operation[0], args.key[0], args.value[0]
@@ -144,6 +144,17 @@ message, response_node = clientSock.recvfrom(4096)
 response = pickle.loads(message)
 print ('\nreceived {} bytes from {}'.format(len(message), response_node))
 print ('response received : ' + str(response))
+
+
+
+
+# unpack and display response
+key_hash, node_hash, total_hops, key_response, value_response = response
+print ('\nThe hash of the Key : \n' + key_hash)
+print ('\nThe hash of the Node : \n' + node_hash)
+print ('\nThe total hops : \n' + str(total_hops))
+print ('\nThe Key : \n' + str(key_response))
+print ('\nThe Value : \n' + str(value_response))
 
 
 
