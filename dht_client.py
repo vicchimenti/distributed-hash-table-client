@@ -45,6 +45,17 @@ def getIP(h) :
     return h_ip
 
 
+def validateOperator(op, v) :
+    if op == GET :
+        if v == NEWLINE : break
+        else :
+            error_message = \
+                "ERROR: GET request included value: all values invalid with GET"
+            print (error_message)
+            sys.exit ("Exiting Program")
+    else : break
+
+
 #   ***************     end function definitions     ***************   #
 
 
@@ -53,6 +64,9 @@ def getIP(h) :
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
 MY_PORT = 10113             # pre-defined client port number
+NEWLINE = '\n'              # newline constant
+GET = 'get'                 # get operator
+PUT = 'put'                 # put operator
 
 # define defaults
 charset = "UTF-8"           # default encoding protocol
@@ -80,6 +94,11 @@ print ('operation : ' + str(args.operation))
 print ('key : ' + str(args.key))
 print ('value : ' + str(args.value))
 
+
+
+
+# validate operation
+validateOperator(args.operation[0], agrs.value[0])
 
 
 
