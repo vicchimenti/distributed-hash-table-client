@@ -124,7 +124,7 @@ server_address = (str(args.node[0]), int(args.nodePort[0]))
 
 
 # compile key value pair for server request
-request = my_IP, MY_PORT, hops, args.operation[0], args.key[0], args.value[0]
+request = my_IP, MY_PORT, hops, args.operation[0], args.key[0], args.value
 message = pickle.dumps(request)
 
 
