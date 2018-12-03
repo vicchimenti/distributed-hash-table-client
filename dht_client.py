@@ -52,7 +52,7 @@ def getIP(h) :
 
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
-MY_PORT = 10119             # pre-defined client port number
+MY_PORT = 10117             # pre-defined client port number
 
 # define defaults
 charset = "UTF-8"           # default encoding protocol
