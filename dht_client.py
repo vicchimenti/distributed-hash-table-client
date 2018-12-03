@@ -16,7 +16,13 @@ import pickle               # for sending a list over socket
 import argparse             # for parsing command line arguments
 
 
+ # *********** TODO : Error checking
+ #      IN node please check for 0 and deletes of values
+ #      In node please return false when value not found
 
+
+
+ 
 
 #   ***************     function definitions     ***************   #
 
