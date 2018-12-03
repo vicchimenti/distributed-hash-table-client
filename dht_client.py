@@ -3,7 +3,7 @@
 #   p2 Distributed Hash Table
 #   dht_client.py
 #   created         11/26/2018
-#   last modified   12/1/2018
+#   last modified   12/3/2018
 #   Distributed Hash Table Client
 #   /usr/local/python3/bin/python3
 
@@ -45,6 +45,16 @@ def getIP(h) :
     return h_ip
 
 
+# if a value was entered with GET throw error and exit program
+def validateOperator(op, v) :
+    if op == GET :
+        if v != NEWLINE :
+            error_message = \
+                "ERROR: GET request included value: all values invalid with GET"
+            print (error_message)
+            sys.exit ("Exiting Program")
+
+
 #   ***************     end function definitions     ***************   #
 
 
@@ -52,7 +62,10 @@ def getIP(h) :
 
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
-MY_PORT = 10119             # pre-defined client port number
+MY_PORT = 10111             # pre-defined client port number
+NEWLINE = '\n'              # newline constant
+GET = 'get'                 # get operator
+PUT = 'put'                 # put operator
 
 # define defaults
 charset = "UTF-8"           # default encoding protocol
@@ -67,9 +80,14 @@ parser.add_argument('node', type=str, nargs=1, default='cs1.seattleu.edu')
 parser.add_argument('nodePort', type=int, nargs=1, default=10109)
 parser.add_argument('operation', type=str, nargs=1)
 parser.add_argument('key', type=str, nargs=1)
-parser.add_argument('value', type=str, nargs='*', default='')
+parser.add_argument('value', type=str, nargs='?', default=NEWLINE)
 args = parser.parse_args()
 
+
+
+
+# check for user input of value with get request
+validateOperator(args.operation[0], args.value[0])
 
 
 
@@ -106,7 +124,7 @@ server_address = (str(args.node[0]), int(args.nodePort[0]))
 
 
 # compile key value pair for server request
-request = my_IP, MY_PORT, hops, args.operation[0], args.key[0], args.value[0]
+request = my_IP, MY_PORT, hops, args.operation[0], args.key[0], args.value
 message = pickle.dumps(request)
 
 
@@ -115,7 +133,7 @@ message = pickle.dumps(request)
 # send key value pair
 bytes_sent = clientSock.sendto(message, server_address)
 print ('\nsent {} bytes to {}'.format(bytes_sent, str(server_address)))
-print ('request sent : ' + str(request))
+print ('\nrequest sent : \n' + str(request))
 
 
 
@@ -124,11 +142,29 @@ print ('request sent : ' + str(request))
 message, response_node = clientSock.recvfrom(4096)
 response = pickle.loads(message)
 print ('\nreceived {} bytes from {}'.format(len(message), response_node))
-print ('response received : ' + str(response))
+print ('\ntuple received : \n' + str(response))
+
+
+
+
+# unpack and display response
+key_hash, node_hash, total_hops, key_response, value_response = response
+print ('\nThe hash of the Key : \n' + key_hash)
+print ('\nThe hash of the Node : \n' + node_hash)
+print ('\nThe total hops : \n' + str(total_hops))
+print ('\nThe Key : \n' + str(key_response))
+print ('\nThe Value : \n' + str(value_response))
 
 
 
 
 clientSock.close()
 print ('\nSocket Closed\n')
+
+#   ******************** TODO :
+#   Add Error Checking *****************!!!!! #
+
+
+
+
 #   eof
