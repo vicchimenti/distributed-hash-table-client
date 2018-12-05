@@ -3,7 +3,7 @@
 #   p2 Distributed Hash Table
 #   dht_client.py
 #   created         11/26/2018
-#   last modified   12/3/2018
+#   last modified   12/5/2018
 #   Distributed Hash Table Client
 #   /usr/local/python3/bin/python3
 
@@ -16,13 +16,7 @@ import pickle               # for sending a list over socket
 import argparse             # for parsing command line arguments
 
 
- # *********** TODO : Error checking
- #      IN node please check for 0 and deletes of values
- #      In node please return false when value not found
 
-
-
- 
 
 #   ***************     function definitions     ***************   #
 
@@ -68,7 +62,7 @@ def validateOperator(op, v) :
 
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
-MY_PORT = 10111             # pre-defined client port number
+MY_PORT = 10117             # pre-defined client port number
 NEWLINE = '\n'              # newline constant
 GET = 'get'                 # get operator
 PUT = 'put'                 # put operator
@@ -81,13 +75,49 @@ hops = 0                    # increments with each node hop
 
 
 # parse and assign command-line input
-parser = argparse.ArgumentParser()
-parser.add_argument('node', type=str, nargs=1, default='cs1.seattleu.edu')
-parser.add_argument('nodePort', type=int, nargs=1, default=10109)
-parser.add_argument('operation', type=str, nargs=1)
-parser.add_argument('key', type=str, nargs=1)
-parser.add_argument('value', type=str, nargs='?', default=NEWLINE)
-args = parser.parse_args()
+try :
+    parser = argparse.ArgumentParser()
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
+try :
+    parser.add_argument('node', type=str, nargs=1, default='cs1.seattleu.edu')
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input Node: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
+try :
+    parser.add_argument('nodePort', type=int, nargs=1, default=10109)
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input NodePort: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
+try :
+    parser.add_argument('operation', type=str, nargs=1)
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input Operation: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
+try :
+    parser.add_argument('key', type=str, nargs=1)
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input Key: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
+try :
+    parser.add_argument('value', type=str, nargs='?', default=NEWLINE)
+    args = parser.parse_args()
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input Value: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
 
 
 
@@ -110,34 +140,71 @@ print ('value : ' + str(args.value))
 # get local host info
 my_URL = getHost()
 my_IP = getIP(my_URL)
-my_address = (my_IP, MY_PORT)
+try :
+    my_address = (my_IP, MY_PORT)
+except ValueError :
+    print ('ERROR: Assigning Local Address')
+    sys.exit ("Exiting Program")
 
 
 
 
 # connect to a node
-clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-clientSock.bind(my_address)
+try :
+    clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+except OSError :
+    print ("ERROR Creating Socket")
+    sys.exit ("Exiting Program")
+
+# bind to specific Port number
+try :
+    clientSock.bind(my_address)
+except ConnectionError :
+    print ('ERROR: ConnectionError Binding the Host and Port')
+    sys.exit ("Exiting Program")
+except OSError :
+    print ('ERROR Port Already in Use')
+    sys.exit ("Exiting Program")
+
+
+
+
+# get my address info for send message
 ip_address, my_port = clientSock.getsockname()
 
-
-
-
 # define host port number and node
-server_address = (str(args.node[0]), int(args.nodePort[0]))
+try :
+    server_address = (str(args.node[0]), int(args.nodePort[0]))
+except ValueError :
+    print ('ERROR: Assigning Server Address')
+    sys.exit ("Exiting Program")
 
 
 
 
 # compile key value pair for server request
-request = my_IP, MY_PORT, hops, args.operation[0], args.key[0], args.value
-message = pickle.dumps(request)
+try :
+    request = my_IP, MY_PORT, hops, args.operation[0], args.key[0], args.value
+except ValueError :
+    print ('ERROR: Assigning Request Header')
+    sys.exit ("Exiting Program")
+
+# pickle the message
+try :
+    message = pickle.dumps(request)
+except PickleError :
+    print ('ERROR: Pickling the Message')
+    sys.exit ("Exiting Program")
 
 
 
 
 # send key value pair
-bytes_sent = clientSock.sendto(message, server_address)
+try :
+    bytes_sent = clientSock.sendto(message, server_address)
+except OSError :
+    print ('ERROR: Sending the Message')
+    sys.exit ("Exiting Program")
 print ('\nsent {} bytes to {}'.format(bytes_sent, str(server_address)))
 print ('\nrequest sent : \n' + str(request))
 
@@ -145,8 +212,18 @@ print ('\nrequest sent : \n' + str(request))
 
 
 # receive response
-message, response_node = clientSock.recvfrom(4096)
-response = pickle.loads(message)
+try :
+    message, response_node = clientSock.recvfrom(4096)
+except OSError :
+    print ('ERROR: Sending the Message')
+    sys.exit ("Exiting Program")
+
+# unpickle the message
+try :
+    response = pickle.loads(message)
+except UnpicklingError :
+    print ('ERROR: UnPickling the Message')
+    sys.exit ("Exiting Program")
 print ('\nreceived {} bytes from {}'.format(len(message), response_node))
 print ('\ntuple received : \n' + str(response))
 
@@ -166,11 +243,4 @@ print ('\nThe Value : \n' + str(value_response))
 
 clientSock.close()
 print ('\nSocket Closed\n')
-
-#   ******************** TODO :
-#   Add Error Checking *****************!!!!! #
-
-
-
-
 #   eof
