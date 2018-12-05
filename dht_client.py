@@ -110,7 +110,11 @@ print ('value : ' + str(args.value))
 # get local host info
 my_URL = getHost()
 my_IP = getIP(my_URL)
-my_address = (my_IP, MY_PORT)
+try :
+    my_address = (my_IP, MY_PORT)
+except ValueError :
+    print ('ERROR: Assigning Local Address')
+    sys.exit ("Exiting Program")
 
 
 
@@ -139,13 +143,21 @@ except OSError :
 ip_address, my_port = clientSock.getsockname()
 
 # define host port number and node
-server_address = (str(args.node[0]), int(args.nodePort[0]))
+try :
+    server_address = (str(args.node[0]), int(args.nodePort[0]))
+except ValueError :
+    print ('ERROR: Assigning Server Address')
+    sys.exit ("Exiting Program")
 
 
 
 
 # compile key value pair for server request
-request = my_IP, MY_PORT, hops, args.operation[0], args.key[0], args.value
+try :
+    request = my_IP, MY_PORT, hops, args.operation[0], args.key[0], args.value
+except ValueError :
+    print ('ERROR: Assigning Request Header')
+    sys.exit ("Exiting Program")
 
 # pickle the message
 try :
@@ -201,11 +213,4 @@ print ('\nThe Value : \n' + str(value_response))
 
 clientSock.close()
 print ('\nSocket Closed\n')
-
-#   ******************** TODO :
-#   Add Error Checking *****************!!!!! #
-
-
-
-
 #   eof
