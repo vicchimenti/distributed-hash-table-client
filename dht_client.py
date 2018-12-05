@@ -68,7 +68,7 @@ def validateOperator(op, v) :
 
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
-MY_PORT = 10105             # pre-defined client port number
+MY_PORT = 10119             # pre-defined client port number
 NEWLINE = '\n'              # newline constant
 GET = 'get'                 # get operator
 PUT = 'put'                 # put operator
