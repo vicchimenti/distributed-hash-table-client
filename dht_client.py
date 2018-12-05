@@ -77,14 +77,44 @@ hops = 0                    # increments with each node hop
 # parse and assign command-line input
 try :
     parser = argparse.ArgumentParser()
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
+try :
     parser.add_argument('node', type=str, nargs=1, default='cs1.seattleu.edu')
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input Node: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
+try :
     parser.add_argument('nodePort', type=int, nargs=1, default=10109)
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input NodePort: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
+try :
     parser.add_argument('operation', type=str, nargs=1)
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input Operation: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
+try :
     parser.add_argument('key', type=str, nargs=1)
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input Key: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
+try :
     parser.add_argument('value', type=str, nargs='?', default=NEWLINE)
     args = parser.parse_args()
 except SystemExit :
-    print ('ERROR: Invalid Command Line Input: Please Re-run the Program')
+    print ('ERROR: Invalid Command Line Input Value: Please Re-run the Program')
     exc = sys.exc_info()[1]
     print (exc)
     sys.exit ('Exiting Program')
