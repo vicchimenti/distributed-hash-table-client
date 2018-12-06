@@ -67,7 +67,7 @@ def validateOperator(op, v) :
 
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
-MY_PORT = 10117             # pre-defined client port number
+MY_PORT = 10116             # pre-defined client port number
 NEWLINE = '\n'              # newline constant
 GET = 'get'                 # get operator
 PUT = 'put'                 # put operator
@@ -250,7 +250,6 @@ except UnpicklingError :
     print (exc)
     sys.exit ("Exiting Program")
 print ('\nreceived {} bytes from {}'.format(len(message), response_node))
-print ('\ntuple received : \n' + str(response))
 
 
 
