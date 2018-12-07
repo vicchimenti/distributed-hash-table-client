@@ -7,8 +7,7 @@
 #   Distributed Hash Table Client
 #   /usr/local/python3/bin/python3
 
-# *** This program was submitted 12/5/18
-#   Debugging Begins
+
 
 
 import sys                  # for system calls
