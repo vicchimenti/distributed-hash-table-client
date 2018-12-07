@@ -76,7 +76,7 @@ def validateOperator(op, v) :
 
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
-MY_PORT = 10119             # pre-defined client port number
+MY_PORT = 10117             # pre-defined client port number
 EMPTY = ''                  # empty string constant
 NEWLINE = '\n'              # newline constant
 GET = 'get'                 # get operator
@@ -119,30 +119,33 @@ except SystemExit :
     print (exc)
     sys.exit ('Exiting Program')
 try :
-    parser.add_argument('key', type=str, nargs='*')
+    parser.add_argument('key', type=str, nargs=1)
 except SystemExit :
     print ('ERROR: Invalid Command Line Input Key: Please Re-run the Program')
     exc = sys.exc_info()[1]
     print (exc)
     sys.exit ('Exiting Program')
-args = parser.parse_args()
-# try :
-#     parser.add_argument('value', type=str, nargs='?', default=NEWLINE)
-#     args = parser.parse_args()
-# except SystemExit :
-#     print ('ERROR: Invalid Command Line Input Value: Please Re-run the Program')
-#     exc = sys.exc_info()[1]
-#     print (exc)
-#     sys.exit ('Exiting Program')
-num = len(args.key)
-print ('num : ' + str(num))
-sys.exit()
+try :
+    parser.add_argument('value', type=str, nargs='?', default=NEWLINE)
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input Value: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
+try :
+    args = parser.parse_args()
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input Parser: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
 
 
 
 
 # check for user input of value with get request
 validateOperator(args.operation[0], args.value[0])
+
 
 
 
