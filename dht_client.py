@@ -10,6 +10,16 @@
 
 
 
+# **********    ATTN: Prof L:
+#               This program uses a hardcoded Port Number
+#
+#
+#
+#
+
+
+
+
 import sys                  # for system calls
 import socket               # for udp socket functionality
 import pickle               # for sending a list over socket
@@ -67,6 +77,7 @@ def validateOperator(op, v) :
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
 MY_PORT = 10119             # pre-defined client port number
+EMPTY = ''                  # empty string constant
 NEWLINE = '\n'              # newline constant
 GET = 'get'                 # get operator
 PUT = 'put'                 # put operator
@@ -108,20 +119,23 @@ except SystemExit :
     print (exc)
     sys.exit ('Exiting Program')
 try :
-    parser.add_argument('key', type=str, nargs=1)
+    parser.add_argument('key', type=str, nargs='*')
 except SystemExit :
     print ('ERROR: Invalid Command Line Input Key: Please Re-run the Program')
     exc = sys.exc_info()[1]
     print (exc)
     sys.exit ('Exiting Program')
-try :
-    parser.add_argument('value', type=str, nargs='?', default=NEWLINE)
-    args = parser.parse_args()
-except SystemExit :
-    print ('ERROR: Invalid Command Line Input Value: Please Re-run the Program')
-    exc = sys.exc_info()[1]
-    print (exc)
-    sys.exit ('Exiting Program')
+# try :
+#     parser.add_argument('value', type=str, nargs='?', default=NEWLINE)
+#     args = parser.parse_args()
+# except SystemExit :
+#     print ('ERROR: Invalid Command Line Input Value: Please Re-run the Program')
+#     exc = sys.exc_info()[1]
+#     print (exc)
+#     sys.exit ('Exiting Program')
+num = len(args.key)
+print ('num : ' + num)
+sys.exit()
 
 
 
