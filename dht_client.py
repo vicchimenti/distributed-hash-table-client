@@ -3,9 +3,19 @@
 #   p2 Distributed Hash Table
 #   dht_client.py
 #   created         11/26/2018
-#   last modified   12/5/2018
+#   last modified   12/6/2018
 #   Distributed Hash Table Client
 #   /usr/local/python3/bin/python3
+
+
+
+
+# **********    ATTN: Prof L:
+#               This program uses a hardcoded Port Number
+#
+#
+#
+#
 
 
 
@@ -28,6 +38,8 @@ def getHost() :
     except AttributeError :
         error_message = "ERROR Failed to Get Hostname"
         print (error_message)
+        exc = sys.exc_info()[1]
+        print (exc)
         sys.exit ("Exiting Program")
 
     return h
@@ -40,6 +52,8 @@ def getIP(h) :
     except AttributeError :
         error_message = "ERROR Failed to Get Host IP Number"
         print (error_message)
+        exc = sys.exc_info()[1]
+        print (exc)
         sys.exit ("Exiting Program")
 
     return h_ip
@@ -63,6 +77,7 @@ def validateOperator(op, v) :
 # DEFINE CONTSANTS
 MATCH_ALL = "0.0.0.0"       # for IP validity checking
 MY_PORT = 10117             # pre-defined client port number
+EMPTY = ''                  # empty string constant
 NEWLINE = '\n'              # newline constant
 GET = 'get'                 # get operator
 PUT = 'put'                 # put operator
@@ -112,9 +127,15 @@ except SystemExit :
     sys.exit ('Exiting Program')
 try :
     parser.add_argument('value', type=str, nargs='?', default=NEWLINE)
-    args = parser.parse_args()
 except SystemExit :
     print ('ERROR: Invalid Command Line Input Value: Please Re-run the Program')
+    exc = sys.exc_info()[1]
+    print (exc)
+    sys.exit ('Exiting Program')
+try :
+    args = parser.parse_args()
+except SystemExit :
+    print ('ERROR: Invalid Command Line Input Parser: Please Re-run the Program')
     exc = sys.exc_info()[1]
     print (exc)
     sys.exit ('Exiting Program')
@@ -124,6 +145,7 @@ except SystemExit :
 
 # check for user input of value with get request
 validateOperator(args.operation[0], args.value[0])
+
 
 
 
@@ -144,6 +166,8 @@ try :
     my_address = (my_IP, MY_PORT)
 except ValueError :
     print ('ERROR: Assigning Local Address')
+    exc = sys.exc_info()[1]
+    print (exc)
     sys.exit ("Exiting Program")
 
 
@@ -154,6 +178,8 @@ try :
     clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 except OSError :
     print ("ERROR Creating Socket")
+    exc = sys.exc_info()[1]
+    print (exc)
     sys.exit ("Exiting Program")
 
 # bind to specific Port number
@@ -161,9 +187,13 @@ try :
     clientSock.bind(my_address)
 except ConnectionError :
     print ('ERROR: ConnectionError Binding the Host and Port')
+    exc = sys.exc_info()[1]
+    print (exc)
     sys.exit ("Exiting Program")
 except OSError :
     print ('ERROR Port Already in Use')
+    exc = sys.exc_info()[1]
+    print (exc)
     sys.exit ("Exiting Program")
 
 
@@ -177,6 +207,8 @@ try :
     server_address = (str(args.node[0]), int(args.nodePort[0]))
 except ValueError :
     print ('ERROR: Assigning Server Address')
+    exc = sys.exc_info()[1]
+    print (exc)
     sys.exit ("Exiting Program")
 
 
@@ -187,6 +219,8 @@ try :
     request = my_IP, MY_PORT, hops, args.operation[0], args.key[0], args.value
 except ValueError :
     print ('ERROR: Assigning Request Header')
+    exc = sys.exc_info()[1]
+    print (exc)
     sys.exit ("Exiting Program")
 
 # pickle the message
@@ -194,6 +228,8 @@ try :
     message = pickle.dumps(request)
 except PickleError :
     print ('ERROR: Pickling the Message')
+    exc = sys.exc_info()[1]
+    print (exc)
     sys.exit ("Exiting Program")
 
 
@@ -204,6 +240,8 @@ try :
     bytes_sent = clientSock.sendto(message, server_address)
 except OSError :
     print ('ERROR: Sending the Message')
+    exc = sys.exc_info()[1]
+    print (exc)
     sys.exit ("Exiting Program")
 print ('\nsent {} bytes to {}'.format(bytes_sent, str(server_address)))
 print ('\nrequest sent : \n' + str(request))
@@ -216,6 +254,8 @@ try :
     message, response_node = clientSock.recvfrom(4096)
 except OSError :
     print ('ERROR: Sending the Message')
+    exc = sys.exc_info()[1]
+    print (exc)
     sys.exit ("Exiting Program")
 
 # unpickle the message
@@ -223,9 +263,10 @@ try :
     response = pickle.loads(message)
 except UnpicklingError :
     print ('ERROR: UnPickling the Message')
+    exc = sys.exc_info()[1]
+    print (exc)
     sys.exit ("Exiting Program")
 print ('\nreceived {} bytes from {}'.format(len(message), response_node))
-print ('\ntuple received : \n' + str(response))
 
 
 
