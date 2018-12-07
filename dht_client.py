@@ -125,6 +125,7 @@ except SystemExit :
     exc = sys.exc_info()[1]
     print (exc)
     sys.exit ('Exiting Program')
+args = parser.parse_args()
 # try :
 #     parser.add_argument('value', type=str, nargs='?', default=NEWLINE)
 #     args = parser.parse_args()
@@ -134,7 +135,7 @@ except SystemExit :
 #     print (exc)
 #     sys.exit ('Exiting Program')
 num = len(args.key)
-print ('num : ' + num)
+print ('num : ' + str(num))
 sys.exit()
 
 
